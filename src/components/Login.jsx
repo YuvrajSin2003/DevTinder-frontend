@@ -1,59 +1,63 @@
-import {useState} from "react";
+import { useState } from "react";
 import axios from "axios";
-import {useDispatch} from "react-redux";
-import {addUser} from "../utils/userSlice";
-import {useNavigate} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
+  const [emailId, setEmailId] = useState("yuvi@gmail.com");
+  const [password, setpassword] = useState("Yuvi@9919");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const[emailId , setEmailId] = useState("yuvi@gmail.com");
-    const[password , setpassword] = useState("Yuvi@9919");
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    const handelLogin = async () => {
-      
-        try{
-            const result = await axios.post(BASE_URL+"/login" , {
-                emailId,
-                password,
-            },
-          {withCredentials:true});
-           console.log(result.data)
-           dispatch(addUser(result.data));
-           return navigate("/");
-        }catch(err){
-            console.log(err);
-        }
-    };
+  const handelLogin = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/login",
+        {
+          emailId,
+          password,
+        },
+        { withCredentials: true }
+      );
+      console.log(res.data);
+      dispatch(addUser(res.data));
+      return navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="flex justify-center items-center my-10">
       <div className="card bg-base-300 w-96 shadow-sm  ">
         <div className="card-body">
           <h2 className="card-title justify-center">Login</h2>
-          <div className="">
-
+          <div>
             <fieldset className="fieldset">
               <legend className="fieldset-legend">Email ID?</legend>
-              <input type="text" className="input" 
-              value={emailId}
-              onChange={(e) => setEmailId(e.target.value)} />
-              
+              <input
+                type="text"
+                className="input"
+                value={emailId}
+                onChange={(e) => setEmailId(e.target.value)}
+              />
             </fieldset>
 
             <fieldset className="fieldset">
               <legend className="fieldset-legend">Password//</legend>
-              <input type="text" className="input" 
-              value={password}
-              onChange={(e) => setpassword(e.target.value)}
-               />
-             
+              <input
+                type="text"
+                className="input"
+                value={password}
+                onChange={(e) => setpassword(e.target.value)}
+              />
             </fieldset>
-
           </div>
           <div className="card-actions justify-center">
-            <button className="btn btn-primary" onClick={handelLogin} >Login</button>
+            <button className="btn btn-primary" onClick={handelLogin}>
+              Login
+            </button>
           </div>
         </div>
       </div>
