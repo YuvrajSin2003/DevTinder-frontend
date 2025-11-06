@@ -15,6 +15,7 @@ const Login = () => {
   const handelLogin = async () => {
     try {
       const res = await axios.post(
+        
         BASE_URL + "/login",
         {
           emailId,
@@ -22,6 +23,8 @@ const Login = () => {
         },
         { withCredentials: true }
       );
+      console.log("Login response:", res.data);
+
       dispatch(addUser(res.data));
       return navigate("/");
     } catch (err) {

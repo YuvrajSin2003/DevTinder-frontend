@@ -1,7 +1,7 @@
 import axios from "axios";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../utils/constants";
 import { addUser } from "../utils/userSlice";
@@ -15,24 +15,23 @@ const Body = () => {
   const userData = useSelector((store) => store.user);
 
   const fetchUser = async () => {
-    if(userData) return;
+    if (userData) return;
     try {
-      const res = await axios.get(BASE_URL + "/feed", {
+      const res = await axios.get(BASE_URL + "/profile/view", {
         withCredentials: true,
       });
-      dispatch(addUser(res.data));
+      dispatch(addUser(res.data));  // ✅ correct usage
     } catch (err) {
-      if(err.status === 401){
+      if (err.response?.status === 401) {
         navigate("/login");
       }
-      console.log(err);
     }
   };
 
   useEffect(() => {
-      fetchUser();
+    fetchUser();
   }, []);
-  
+
   return (
     <div>
       <NavBar />
@@ -41,4 +40,5 @@ const Body = () => {
     </div>
   );
 };
+
 export default Body;
