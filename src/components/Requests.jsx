@@ -15,7 +15,7 @@ const Requests = () => {
         {},
         { withCredentials: true }
       );
-      dispatch(removeRequest()) 
+      dispatch(removeRequest( )) 
     } catch (err) {
       console.log(err);
     }
